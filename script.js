@@ -104,9 +104,9 @@ async function fetchCategories() {
     }
 }
 
-async function saveProduct(productData) {
-    const method = productData.id ? 'PUT' : 'POST';
-    const url = productData.id 
+async function saveProduct(productData, isEdit = false) {
+    const method = isEdit ? 'PUT' : 'POST';
+    const url = isEdit 
         ? `${API_BASE}/products?id=${productData.id}`
         : `${API_BASE}/products`;
     
@@ -143,10 +143,8 @@ async function deleteProduct(productId) {
 }
 
 async function saveCategory(categoryData) {
-    const method = categoryData.id ? 'PUT' : 'POST';
-    const url = categoryData.id
-        ? `${API_BASE}/categories?id=${categoryData.id}`
-        : `${API_BASE}/categories`;
+    const method = categoryData.oldName ? 'PUT' : 'POST';
+    const url = `${API_BASE}/categories`;
     
     try {
         const response = await fetch(url, {
@@ -1107,13 +1105,14 @@ async function handleProductSubmit(e) {
             images: uploadedAdditionalImages
         };
         
+        const isEdit = !!productId;
         if (productId) {
             productData.id = productId;
         } else {
             productData.id = generateId();
         }
         
-        await saveProduct(productData);
+        await saveProduct(productData, isEdit);
         
         // Refresh data
         allProducts = await fetchProducts();
