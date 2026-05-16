@@ -117,8 +117,12 @@ async function saveProduct(productData) {
             body: JSON.stringify(productData)
         });
         
-        if (!response.ok) throw new Error('Məhsul saxlanıla bilmədi');
-        return await response.json();
+        const result = await response.json().catch(() => ({}));
+        
+        if (!response.ok) {
+            throw new Error(result.error || result.details || result.message || 'Məhsul saxlanıla bilmədi');
+        }
+        return result;
     } catch (error) {
         console.error('Error saving product:', error);
         throw error;
