@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "name": "deri cuzdan",
+    "price": 25,
+    "category": "Pul kisəsi",
+    "description": "git push --set-upstream main main git push --set-upstream main main git push --set-upstream main main git push --set-upstream main main git push --set-upstream main main git push --set-upstream main main git push --set-upstream main main git push --set-upstream main main git push --set-upstream main main git push --set-upstream main main git push --set-upstream main main git push --set-upstream main main git push --set-upstream main main git push --set-upstream main main git push --set-upstream main main git push --set-upstream main main git push --set-upstream main main git push --set-upstream main main git push --set-upstream main main git push --set-upstream main main git push --set-upstream main main git push --set-upstream main main git push --set-upstream main main",
+    "mainImage": "https://res.cloudinary.com/dmllkfvrc/image/upload/v1778964524/ekran-goruntusu-2026-04-17-223439_1778964575524.png",
+    "images": [],
+    "id": "prod_1778964576277_oxoiqn92q",
+    "createdAt": "2026-05-16T20:48:45.228Z"
+  }
+]
