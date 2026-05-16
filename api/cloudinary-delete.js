@@ -1,16 +1,5 @@
-// api/cloudinary-delete.js - Vercel Serverless Function
-// Handles deletion of images from Cloudinary
-
+// api/cloudinary-delete.js
 const crypto = require('crypto');
-
-const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME;
-const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;
-const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET;
-
-function generateSignature(publicId, timestamp) {
-    const str = `public_id=${publicId}&timestamp=${timestamp}${CLOUDINARY_API_SECRET}`;
-    return crypto.createHash('sha1').update(str).digest('hex');
-}
 
 module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -20,41 +9,44 @@ module.exports = async (req, res) => {
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
     }
-    
+
     if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
+        return res.status(405).json({ error: 'Only POST allowed' });
     }
-    
+
     try {
         const { public_id } = req.body;
         
         if (!public_id) {
-            return res.status(400).json({ error: 'public_id is required' });
+            return res.status(400).json({ error: 'public_id required' });
         }
-        
-        const timestamp = Math.round(new Date().getTime() / 1000);
-        const signature = generateSignature(public_id, timestamp);
-        
-        const formData = new FormData();
+
+        const timestamp = Math.round(Date.now() / 1000);
+        const signature = crypto
+            .createHash('sha1')
+            .update(`public_id=${public_id}&timestamp=${timestamp}${process.env.CLOUDINARY_API_SECRET}`)
+            .digest('hex');
+
+        const formData = new URLSearchParams();
         formData.append('public_id', public_id);
         formData.append('timestamp', timestamp);
-        formData.append('api_key', CLOUDINARY_API_KEY);
+        formData.append('api_key', process.env.CLOUDINARY_API_KEY);
         formData.append('signature', signature);
-        
+
         const response = await fetch(
-            `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/destroy`,
+            `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/destroy`,
             {
                 method: 'POST',
-                body: formData
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData.toString()
             }
         );
-        
+
         const result = await response.json();
-        
         return res.status(200).json(result);
-        
+
     } catch (error) {
-        console.error('Cloudinary delete error:', error);
-        return res.status(500).json({ error: error.message || 'Delete failed' });
+        console.error('Error:', error);
+        return res.status(500).json({ error: error.message });
     }
 };
