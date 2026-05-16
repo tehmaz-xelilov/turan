@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
         async function getFromGitHub() {
             const response = await fetch(GITHUB_API, {
                 headers: {
-                    'Authorization': `token ${GITHUB_TOKEN}`,
+                    'Authorization': `Bearer ${GITHUB_TOKEN}`,
                     'Accept': 'application/vnd.github.v3+json',
                     'User-Agent': 'Turan-Leather'
                 }

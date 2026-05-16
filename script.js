@@ -983,7 +983,7 @@ function editProduct(productId) {
     if (!product) return;
     
     // Switch to add product tab
-    const addTabBtn = document.querySelector('[data-tab="add-product"]');
+    const addTabBtn = document.querySelector('[data-tab="addProduct"]');
     if (addTabBtn) addTabBtn.click();
     
     // Fill form
