@@ -3,7 +3,7 @@
 
 // ==================== CONFIGURATION ====================
 const API_BASE = '/api';
-const CLOUDINARY_CLOUD_NAME = 'turan-leather'; // Will be configured in env
+const CLOUDINARY_CLOUD_NAME = 'dmllkfvrc'; // BURANI ÖZ CLOUD NAME-İNİZLƏ DƏYİŞİN
 const CLOUDINARY_UPLOAD_PRESET = 'turan_leather_unsigned';
 const PRODUCTS_PER_PAGE = 9;
 const ADMIN_PRODUCTS_PER_PAGE = 10;
