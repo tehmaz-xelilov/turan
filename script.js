@@ -298,8 +298,14 @@ function renderCategoryFilters() {
         // Add click listeners
         container.querySelectorAll('.category-filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                container.querySelectorAll('.category-filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+                // Remove active from ALL category buttons in BOTH containers
+                document.querySelectorAll('.category-filter-btn').forEach(b => {
+                    if (b.dataset.category === btn.dataset.category) {
+                        b.classList.add('active');
+                    } else {
+                        b.classList.remove('active');
+                    }
+                });
                 applyFiltersAndRender();
             });
         });
@@ -505,26 +511,22 @@ function createProductCard(product) {
     const mainImage = product.mainImage || 'https://via.placeholder.com/400x400?text=No+Image';
     
     return `
-        <div class="product-card cursor-pointer" data-product-id="${product.id}">
-            <div class="relative h-64 overflow-hidden bg-[#F5F0E8]">
+        <div class="product-card" data-product-id="${product.id}">
+            <div class="card-image-wrapper">
                 <img src="${mainImage}" alt="${product.name}" 
-                     class="w-full h-full object-cover" 
                      onerror="this.src='https://via.placeholder.com/400x400?text=No+Image'">
-                <span class="absolute top-3 right-3 bg-[#1A1814] text-white text-xs px-2 py-1 rounded-full">
-                    ${product.category || 'Ümumi'}
-                </span>
+                <span class="card-badge">${product.category || 'Premium'}</span>
             </div>
-            <div class="p-4">
-                <h3 class="font-semibold text-[#1A1814] text-lg truncate">${product.name}</h3>
-                <p class="text-2xl font-bold text-[#C9A96E] mt-2">${formatPrice(product.price)}</p>
-                <div class="flex items-center space-x-2 mt-4">
-                    <button class="detail-btn flex-1 px-3 py-2 border border-[#D4C5B2] text-[#5C5548] rounded-lg text-sm hover:bg-gray-50 transition-colors" 
-                            data-product-id="${product.id}">
-                        <i class="fa-solid fa-eye mr-1"></i> Ətraflı
+            <div class="card-content">
+                <span class="card-category">${product.category || 'Kolleksiya'}</span>
+                <h3 class="card-title">${product.name}</h3>
+                <p class="card-price">${formatPrice(product.price)}</p>
+                <div class="card-actions">
+                    <button class="btn-premium detail-btn" data-product-id="${product.id}">
+                        Kəşf et
                     </button>
-                    <button class="order-btn flex-1 px-3 py-2 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700 transition-colors" 
-                            data-product-id="${product.id}">
-                        <i class="fa-brands fa-whatsapp mr-1"></i> Sifariş et
+                    <button class="btn-premium primary order-btn" data-product-id="${product.id}">
+                        <i class="fa-brands fa-whatsapp"></i> Sifariş
                     </button>
                 </div>
             </div>
@@ -542,15 +544,15 @@ function openProductModal(productId) {
     // Set product details
     document.getElementById('modalProductName').textContent = product.name;
     document.getElementById('modalPrice').textContent = formatPrice(product.price);
-    document.getElementById('modalCategory').textContent = product.category || '';
-    document.getElementById('modalDescription').textContent = product.description || 'Məhsul haqqında ətraflı məlumat yoxdur.';
+    document.getElementById('modalCategory').textContent = product.category || 'Premium Kolleksiya';
+    document.getElementById('modalDescription').textContent = product.description || 'Bu premium əl işi məhsul haqqında ətraflı məlumat tezliklə əlavə olunacaq.';
     
     // Build image array
     const images = [product.mainImage, ...(product.images || [])].filter(img => img);
     
     // Build swiper slides
     swiperWrapper.innerHTML = images.map(img => `
-        <div class="swiper-slide flex items-center justify-center bg-[#F5F0E8]">
+        <div class="swiper-slide flex items-center justify-center">
             <img src="${img}" alt="${product.name}" class="w-full h-full object-contain" 
                  onerror="this.src='https://via.placeholder.com/600x400?text=No+Image'">
         </div>
@@ -778,7 +780,7 @@ function renderAdminProductsList() {
                     <p class="text-sm text-gray-500">${product.category || 'Kateqoriyasız'} · ${formatPrice(product.price)}</p>
                 </div>
                 <div class="flex items-center space-x-2 flex-shrink-0">
-                    <button class="edit-product-btn px-3 py-1.5 text-sm border border-[#D4C5B2] rounded-lg hover:bg-gray-50" 
+                    <button class="edit-product-btn px-3 py-1.5 text-sm border border-gray-200 rounded-lg hover:bg-gray-50" 
                             data-product-id="${product.id}">
                         <i class="fa-solid fa-pen mr-1"></i> Redaktə
                     </button>
@@ -1224,44 +1226,3 @@ document.addEventListener('DOMContentLoaded', () => {
         loadAdminPanel();
     }
 });
-
-
-// === script.js əlavə düzəlişlər (yalnız createProductCard funksiyasını yeniləyin) ===
-
-function createProductCard(product) {
-    const mainImage = product.mainImage || 'https://via.placeholder.com/400x400?text=No+Image';
-    const category = product.category || 'Koleksiya';
-    return `
-        <div class="product-card" data-product-id="${product.id}">
-            <img class="product-image" src="${mainImage}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/400x400?text=Turan'">
-            <div class="product-info">
-                <div class="product-category">${category}</div>
-                <h3 class="product-name">${escapeHtml(product.name)}</h3>
-                <div class="product-price">₼ ${parseFloat(product.price).toFixed(2)}</div>
-                <div class="card-actions">
-                    <button class="btn-detail detail-btn" data-product-id="${product.id}"><i class="fas fa-eye"></i> Bax</button>
-                    <button class="btn-order order-btn" data-product-id="${product.id}"><i class="fab fa-whatsapp"></i> Sifariş</button>
-                </div>
-            </div>
-        </div>
-    `;
-}
-// Həmçinin showToast funksiyasını dəyişin (style.css ilə uyğun):
-window.showToast = function(message, type = 'success') {
-    const toast = document.getElementById('toastMsg');
-    const textSpan = document.getElementById('toastText');
-    if(!toast) return;
-    textSpan.innerText = message;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3000);
-};
-// escapeHtml funksiyası əlavə edin:
-function escapeHtml(str) {
-    if(!str) return '';
-    return str.replace(/[&<>]/g, function(m) {
-        if(m === '&') return '&amp;';
-        if(m === '<') return '&lt;';
-        if(m === '>') return '&gt;';
-        return m;
-    });
-}
