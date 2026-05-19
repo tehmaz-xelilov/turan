@@ -185,25 +185,33 @@ h1, h2, h3, .logo-text {
 
 /* Simplified pill-like filter buttons (white box with text) */
 .cat-btn {
-    background: #ffffff;
-    color: var(--brand-dark, #071428);
-    border: 1px solid rgba(7,20,40,0.06);
-    padding: 8px 14px;
-    border-radius: 12px;
-    font-size: 0.9rem;
+    /* Glassy pill for dark background: subtle, accessible, touch-friendly */
+    background: rgba(255,255,255,0.04);
+    color: #F6F2EA;
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: transform 160ms ease, box-shadow 160ms ease;
-    box-shadow: 0 6px 18px rgba(6,10,16,0.06);
+    transition: transform 180ms cubic-bezier(.2,.9,.3,1), box-shadow 180ms;
+    box-shadow: 0 6px 18px rgba(3,6,10,0.5);
+    backdrop-filter: blur(6px);
 }
 
-.cat-btn:hover{transform:translateY(-2px)}
+.cat-btn:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(3,6,10,0.55)}
 
-.cat-btn.active {
+.cat-btn.active{
     background: linear-gradient(90deg,var(--accent,#e0b96b),var(--accent-2,#f3e6c7));
     color: var(--brand-dark,#071428);
     border-color: transparent;
-    box-shadow: 0 12px 30px rgba(224,185,107,0.14);
-    font-weight:600;
+    box-shadow: 0 22px 48px rgba(224,185,107,0.16);
+}
+
+/* Make filter buttons full-width stack on very small screens for easier tapping */
+@media (max-width:420px){
+    .category-filters{flex-direction:column;gap:10px}
+    .cat-btn{width:100%;padding:12px 16px}
 }
 
 .price-range {
