@@ -184,10 +184,8 @@ h1, h2, h3, .logo-text {
 }
 
 /* Simplified pill-like filter buttons (white box with text) */
-/* Ensure both generated buttons and any manual .cat-btn use the same pill styling */
-.category-filter-btn, .cat-btn {
+.cat-btn {
     /* Glassy pill for dark background: subtle, accessible, touch-friendly */
-.category-filter-btn, .cat-btn {
     background: rgba(255,255,255,0.04);
     color: #F6F2EA;
     border: 1px solid rgba(255,255,255,0.06);
@@ -201,9 +199,9 @@ h1, h2, h3, .logo-text {
     backdrop-filter: blur(6px);
 }
 
-.category-filter-btn:hover, .cat-btn:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(3,6,10,0.55)}
+.cat-btn:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(3,6,10,0.55)}
 
-.category-filter-btn.active, .cat-btn.active{
+.cat-btn.active{
     background: linear-gradient(90deg,var(--accent,#e0b96b),var(--accent-2,#f3e6c7));
     color: var(--brand-dark,#071428);
     border-color: transparent;
