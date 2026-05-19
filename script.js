@@ -1224,3 +1224,44 @@ document.addEventListener('DOMContentLoaded', () => {
         loadAdminPanel();
     }
 });
+
+
+// === script.js əlavə düzəlişlər (yalnız createProductCard funksiyasını yeniləyin) ===
+
+function createProductCard(product) {
+    const mainImage = product.mainImage || 'https://via.placeholder.com/400x400?text=No+Image';
+    const category = product.category || 'Koleksiya';
+    return `
+        <div class="product-card" data-product-id="${product.id}">
+            <img class="product-image" src="${mainImage}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/400x400?text=Turan'">
+            <div class="product-info">
+                <div class="product-category">${category}</div>
+                <h3 class="product-name">${escapeHtml(product.name)}</h3>
+                <div class="product-price">₼ ${parseFloat(product.price).toFixed(2)}</div>
+                <div class="card-actions">
+                    <button class="btn-detail detail-btn" data-product-id="${product.id}"><i class="fas fa-eye"></i> Bax</button>
+                    <button class="btn-order order-btn" data-product-id="${product.id}"><i class="fab fa-whatsapp"></i> Sifariş</button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+// Həmçinin showToast funksiyasını dəyişin (style.css ilə uyğun):
+window.showToast = function(message, type = 'success') {
+    const toast = document.getElementById('toastMsg');
+    const textSpan = document.getElementById('toastText');
+    if(!toast) return;
+    textSpan.innerText = message;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+};
+// escapeHtml funksiyası əlavə edin:
+function escapeHtml(str) {
+    if(!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+        if(m === '&') return '&amp;';
+        if(m === '<') return '&lt;';
+        if(m === '>') return '&gt;';
+        return m;
+    });
+}

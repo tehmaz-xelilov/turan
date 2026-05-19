@@ -3,205 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Turan Leather - Premium Dəri Məhsulları</title>
+    <title>Turan Leather | Premium Dəri Məhsulları</title>
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Swiper.js -->
+    <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <!-- Custom CSS -->
+    <!-- Main Styles (YENİ DİZAYN) -->
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-[#FAF8F5]">
+<body>
+
     <!-- Header -->
-    <header class="sticky top-0 z-50 bg-[#1A1814] text-white shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16 md:h-20">
-                <!-- Logo -->
-                <div class="flex-shrink-0">
-                    <h1 class="text-2xl md:text-3xl font-bold tracking-wider" style="font-family: 'Playfair Display', serif;">
-                        TURAN <span class="text-[#C9A96E]">LEATHER</span>
-                    </h1>
-                </div>
-
-                <!-- Desktop Search & Menu -->
-                <div class="hidden md:flex items-center space-x-6 flex-1 max-w-lg mx-8">
-                    <div class="relative w-full">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                        <input type="text" id="searchInput" placeholder="Məhsul axtar..." 
-                               class="w-full pl-10 pr-4 py-2 bg-[#2C2822] border border-[#3D3830] rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#C9A96E] transition-colors">
-                    </div>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <button id="mobileMenuBtn" class="md:hidden text-white text-2xl">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- Mobile Search -->
-        <div class="md:hidden px-4 pb-3">
-            <div class="relative">
-                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                <input type="text" id="mobileSearchInput" placeholder="Məhsul axtar..." 
-                       class="w-full pl-10 pr-4 py-2 bg-[#2C2822] border border-[#3D3830] rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#C9A96E] transition-colors">
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="/" class="logo">TURAN <span>LEATHER</span></a>
+            <div class="search-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Məhsul axtarın...">
             </div>
         </div>
     </header>
 
-    <!-- Main Layout -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="flex flex-col lg:flex-row gap-8">
-            <!-- Sidebar Filters -->
-            <aside id="filterSidebar" class="lg:w-72 flex-shrink-0 hidden lg:block">
-                <div class="sticky top-24 bg-white rounded-xl shadow-sm p-6 border border-[#E5D9C5]">
-                    <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-lg font-semibold text-[#1A1814]">Filtrlər</h2>
-                        <button id="resetFilters" class="text-sm text-[#C9A96E] hover:text-[#A8894A] transition-colors">
-                            <i class="fa-solid fa-rotate-left mr-1"></i> Sıfırla
-                        </button>
-                    </div>
-
-                    <!-- Category Filter -->
-                    <div class="mb-6">
-                        <h3 class="text-sm font-medium text-[#5C5548] mb-3">Kateqoriya</h3>
-                        <div id="categoryFilters" class="space-y-2">
-                            <!-- Categories will be loaded dynamically -->
-                        </div>
-                    </div>
-
-                    <!-- Price Range Filter -->
-                    <div>
-                        <h3 class="text-sm font-medium text-[#5C5548] mb-3">Qiymət Aralığı (₼)</h3>
-                        <div class="flex items-center space-x-2">
-                            <input type="number" id="minPrice" placeholder="Min" 
-                                   class="w-full px-3 py-2 border border-[#D4C5B2] rounded-lg text-sm focus:outline-none focus:border-[#C9A96E]">
-                            <span class="text-[#5C5548]">-</span>
-                            <input type="number" id="maxPrice" placeholder="Max" 
-                                   class="w-full px-3 py-2 border border-[#D4C5B2] rounded-lg text-sm focus:outline-none focus:border-[#C9A96E]">
-                        </div>
-                        <button id="applyPriceFilter" class="w-full mt-3 px-4 py-2 bg-[#1A1814] text-white rounded-lg text-sm hover:bg-[#2C2822] transition-colors">
-                            Tətbiq et
-                        </button>
-                    </div>
-                </div>
-            </aside>
-
-            <!-- Mobile Filter Overlay -->
-            <div id="mobileFilterOverlay" class="fixed inset-0 bg-black/50 z-50 hidden lg:hidden">
-                <div class="absolute right-0 top-0 h-full w-80 bg-white p-6 overflow-y-auto">
-                    <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-lg font-semibold">Filtrlər</h2>
-                        <button id="closeMobileFilter" class="text-2xl text-gray-500">&times;</button>
-                    </div>
-                    <!-- Same filter content as desktop -->
-                    <div id="mobileCategoryFilters" class="space-y-2 mb-6"></div>
-                    <div class="mb-6">
-                        <h3 class="text-sm font-medium text-[#5C5548] mb-3">Qiymət Aralığı (₼)</h3>
-                        <div class="flex items-center space-x-2 mb-3">
-                            <input type="number" id="mobileMinPrice" placeholder="Min" 
-                                   class="w-full px-3 py-2 border rounded-lg text-sm">
-                            <span>-</span>
-                            <input type="number" id="mobileMaxPrice" placeholder="Max" 
-                                   class="w-full px-3 py-2 border rounded-lg text-sm">
-                        </div>
-                        <button id="applyMobilePriceFilter" class="w-full px-4 py-2 bg-[#1A1814] text-white rounded-lg text-sm">
-                            Tətbiq et
-                        </button>
-                    </div>
-                    <button id="resetMobileFilters" class="w-full px-4 py-2 border border-[#D4C5B2] rounded-lg text-sm">
-                        Sıfırla
-                    </button>
-                </div>
-            </div>
-
-            <!-- Products Grid -->
-            <main class="flex-1">
-                <!-- Mobile Filter Toggle -->
-                <div class="flex items-center justify-between mb-6 lg:hidden">
-                    <button id="mobileFilterToggle" class="flex items-center space-x-2 px-4 py-2 bg-white border border-[#D4C5B2] rounded-lg text-sm">
-                        <i class="fa-solid fa-filter"></i>
-                        <span>Filtrlər</span>
-                    </button>
-                    <span id="productCount" class="text-sm text-[#5C5548]"></span>
-                </div>
-
-                <div class="hidden lg:flex items-center justify-between mb-6">
-                    <span id="desktopProductCount" class="text-sm text-[#5C5548]"></span>
-                </div>
-
-                <!-- Loading Spinner -->
-                <div id="loadingSpinner" class="flex justify-center py-20">
-                    <div class="w-10 h-10 border-4 border-[#C9A96E] border-t-transparent rounded-full animate-spin"></div>
-                </div>
-
-                <!-- Products Grid -->
-                <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Products will be loaded dynamically -->
-                </div>
-
-                <!-- Load More Button -->
-                <div id="loadMoreContainer" class="flex justify-center mt-8">
-                    <button id="loadMoreBtn" class="px-8 py-3 bg-[#1A1814] text-white rounded-lg hover:bg-[#2C2822] transition-all duration-300 transform hover:scale-105">
-                        <i class="fa-solid fa-plus mr-2"></i> Daha çox yüklə
-                    </button>
-                </div>
-            </main>
-        </div>
-    </div>
-
-    <!-- Product Detail Modal -->
-    <div id="productModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
-            <button id="closeModal" class="absolute top-4 right-4 z-10 w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center hover:bg-gray-100 transition-colors">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-            
-            <!-- Swiper Image Slider -->
-            <div class="swiper productSwiper w-full h-80 md:h-96 bg-[#F5F0E8]">
-                <div class="swiper-wrapper" id="modalSwiperWrapper">
-                    <!-- Slides will be added dynamically -->
-                </div>
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-            </div>
-
-            <!-- Product Info -->
-            <div class="p-6">
-                <span id="modalCategory" class="text-sm text-[#C9A96E] font-medium uppercase tracking-wider"></span>
-                <h2 id="modalProductName" class="text-2xl font-bold text-[#1A1814] mt-2"></h2>
-                <p id="modalPrice" class="text-3xl font-bold text-[#C9A96E] mt-3"></p>
-                <p id="modalDescription" class="text-gray-600 mt-4 leading-relaxed"></p>
-                
-                <button id="modalOrderBtn" class="w-full mt-6 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300 transform hover:scale-105 font-medium">
-                    <i class="fa-brands fa-whatsapp mr-2"></i> WhatsApp ilə sifariş et
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Əsl dəri.<br>Əsl <span class="gold">sənət</span>.</h1>
+                <p class="hero-desc">Turan Leather — əl işi premium dəri aksesuarlar. Hər bir məhsul saatlarla zəhmət və diqqət məhsuludur.</p>
+                <button id="exploreBtn" class="btn-primary">
+                    <i class="fas fa-shopping-bag"></i> KOLLEKSİYANI KƏŞF ET
                 </button>
             </div>
         </div>
+    </section>
+
+    <!-- Filters + Products Main Area -->
+    <div class="filters-panel">
+        <div class="container filters-row">
+            <div class="category-filters" id="categoryFilters">
+                <!-- Kateqoriyalar JS ilə dolacaq -->
+            </div>
+            <div class="price-range">
+                <input type="number" id="minPrice" placeholder="Min ₼" step="1">
+                <input type="number" id="maxPrice" placeholder="Max ₼" step="1">
+                <button id="applyPriceBtn"><i class="fas fa-filter"></i></button>
+                <button id="resetFiltersBtn" class="btn-outline" style="padding: 6px 16px;">Sıfırla</button>
+            </div>
+        </div>
     </div>
 
+    <main class="container">
+        <!-- Product count row -->
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px;">
+            <span id="productCountText" class="product-count">0 məhsul</span>
+            <button id="mobileFilterToggle" class="btn-outline" style="display: none; padding: 6px 14px;">
+                <i class="fas fa-sliders-h"></i> Filtrlər
+            </button>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loadingSpinner" class="spinner" style="display: none;"></div>
+
+        <!-- Products Grid -->
+        <div id="productsGrid" class="products-grid"></div>
+
+        <!-- Load More Button -->
+        <div id="loadMoreWrapper" class="load-more-wrap">
+            <button id="loadMoreBtn" class="btn-outline">Daha çox <i class="fas fa-arrow-down"></i></button>
+        </div>
+    </main>
+
     <!-- Footer -->
-    <footer class="bg-[#1A1814] text-white mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="text-center">
-                <h3 class="text-2xl font-bold mb-4" style="font-family: 'Playfair Display', serif;">
-                    TURAN <span class="text-[#C9A96E]">LEATHER</span>
-                </h3>
-                <p class="text-gray-400">Premium əl işi dəri məhsulları</p>
-                <div class="mt-4 text-sm text-gray-500">
-                    © 2026 Turan Leather. Bütün hüquqlar qorunur.
+    <footer class="footer">
+        <div class="container">
+            <p style="margin-bottom: 12px;">© 2025 Turan Leather — Premium əl işi dəri</p>
+            <p style="font-size: 0.7rem;">Sifarişlər üçün WhatsApp: <span class="gold">+994 XX XXX XX XX</span></p>
+        </div>
+    </footer>
+
+    <!-- Product Detail Modal -->
+    <div id="productModal" class="modal-overlay">
+        <div class="modal-container">
+            <button class="modal-close" id="closeModalBtn"><i class="fas fa-times"></i></button>
+            <div class="modal-grid">
+                <div class="modal-slider">
+                    <div class="swiper productSwiper">
+                        <div class="swiper-wrapper" id="modalSwiperWrapper"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+                <div class="modal-info">
+                    <span id="modalCategory" class="product-category"></span>
+                    <h2 id="modalProductName" style="font-size: 1.8rem; margin: 16px 0 8px;"></h2>
+                    <div id="modalPrice" class="product-price" style="font-size: 2rem;"></div>
+                    <p id="modalDescription" style="color: #B0AA9F; line-height: 1.6; margin: 20px 0;"></p>
+                    <button id="modalOrderBtn" class="btn-primary" style="width: 100%; justify-content: center;">
+                        <i class="fab fa-whatsapp"></i> WhatsApp ilə sifariş et
+                    </button>
                 </div>
             </div>
         </div>
-    </footer>
+    </div>
+
+    <!-- Toast mesajları -->
+    <div id="toastMsg" class="toast-notify">
+        <i class="fas fa-check-circle" style="color: #D4AF6A; margin-right: 8px;"></i>
+        <span id="toastText"></span>
+    </div>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="script.js"></script>
+    <script>
+        // Mobil filtr toggle üçün əlavə
+        const filterToggle = document.getElementById('mobileFilterToggle');
+        const filtersPanel = document.querySelector('.filters-panel');
+        if(filterToggle && filtersPanel) {
+            filterToggle.style.display = window.innerWidth < 768 ? 'inline-flex' : 'none';
+            filterToggle.addEventListener('click', () => {
+                filtersPanel.classList.toggle('active');
+                if(filtersPanel.classList.contains('active')) {
+                    filtersPanel.style.display = 'block';
+                } else {
+                    filtersPanel.style.display = '';
+                }
+            });
+            window.addEventListener('resize', () => {
+                if(window.innerWidth < 768) filterToggle.style.display = 'inline-flex';
+                else filterToggle.style.display = 'none';
+            });
+        }
+    </script>
 </body>
 </html>
