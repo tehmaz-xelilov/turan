@@ -361,16 +361,17 @@ function setupMobileFilters() {
     }
     
     // Desktop filters
-    const resetBtn = document.getElementById('resetFilters');
-    const applyPriceBtn = document.getElementById('applyPriceFilter');
-    
+    // Accept multiple possible IDs to match HTML variants
+    const resetBtn = document.getElementById('resetFilters') || document.getElementById('resetFiltersBtn');
+    const applyPriceBtn = document.getElementById('applyPriceFilter') || document.getElementById('applyPriceBtn') || document.getElementById('applyPrice');
+
     if (resetBtn) {
         resetBtn.addEventListener('click', () => {
             resetFilters();
             applyFiltersAndRender();
         });
     }
-    
+
     if (applyPriceBtn) {
         applyPriceBtn.addEventListener('click', applyFiltersAndRender);
     }
@@ -444,11 +445,11 @@ function applyFiltersAndRender() {
     });
     
     // Update product count
-    const countEl = document.getElementById('productCount');
-    const desktopCountEl = document.getElementById('desktopProductCount');
+    const countEl = document.getElementById('productCount') || document.getElementById('productCountText');
+    const desktopCountEl = document.getElementById('desktopProductCount') || document.getElementById('productCountText');
     const countText = `${filteredProducts.length} məhsul tapıldı`;
     if (countEl) countEl.textContent = countText;
-    if (desktopCountEl) desktopCountEl.textContent = countText;
+    if (desktopCountEl && desktopCountEl !== countEl) desktopCountEl.textContent = countText;
     
     // Reset displayed count
     displayedCount = 0;
@@ -612,7 +613,8 @@ document.addEventListener('click', (e) => {
     if (e.target.id === 'productModal') {
         closeProductModal();
     }
-    if (e.target.id === 'closeModal') {
+    // support both old and new close button ids
+    if (e.target.id === 'closeModal' || e.target.id === 'closeModalBtn' || e.target.closest('#closeModalBtn')) {
         closeProductModal();
     }
 });
@@ -1222,6 +1224,18 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (isAdminPanel()) {
         loadAdminPanel();
+    }
+    
+    // Hero explore button: scroll to products
+    const exploreBtn = document.getElementById('exploreBtn');
+    if (exploreBtn) {
+        exploreBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const grid = document.getElementById('productsGrid');
+            if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // ensure filters applied
+            applyFiltersAndRender();
+        });
     }
 });
 
