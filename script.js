@@ -1237,6 +1237,39 @@ document.addEventListener('DOMContentLoaded', () => {
             applyFiltersAndRender();
         });
     }
+
+    // Mobile search toggle behavior
+    const mobileSearchToggle = document.getElementById('mobileSearchToggle');
+    const mobileSearchOverlay = document.getElementById('mobileSearchOverlay');
+    const mobileSearchClose = document.getElementById('mobileSearchClose');
+    const mobileSearchInput = document.getElementById('mobileSearchInput');
+
+    if (mobileSearchToggle && mobileSearchOverlay) {
+        mobileSearchToggle.addEventListener('click', () => {
+            mobileSearchOverlay.classList.remove('hidden');
+            mobileSearchOverlay.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            // focus input when visible
+            setTimeout(() => mobileSearchInput?.focus(), 120);
+        });
+    }
+
+    if (mobileSearchClose && mobileSearchOverlay) {
+        mobileSearchClose.addEventListener('click', () => {
+            mobileSearchOverlay.classList.add('hidden');
+            mobileSearchOverlay.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        });
+    }
+
+    // Close mobile search overlay on Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileSearchOverlay && !mobileSearchOverlay.classList.contains('hidden')) {
+            mobileSearchOverlay.classList.add('hidden');
+            mobileSearchOverlay.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+    });
 });
 
 

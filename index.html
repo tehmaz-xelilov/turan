@@ -19,10 +19,14 @@
     <header class="site-header">
         <div class="container header-inner">
             <a href="/" class="logo">TURAN <span>LEATHER</span></a>
-            <div class="search-wrapper">
-                <i class="fas fa-search"></i>
+            <div class="search-wrapper" aria-hidden="false">
+                <i class="fas fa-search desktop-search-icon"></i>
                 <input type="text" id="searchInput" placeholder="Məhsul axtarın...">
             </div>
+            <!-- Mobile search toggle: visible only on small screens -->
+            <button id="mobileSearchToggle" class="mobile-search-toggle" aria-label="Axtarış">
+                <i class="fas fa-search"></i>
+            </button>
         </div>
     </header>
 
@@ -106,6 +110,14 @@
                     </button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Mobile Search Overlay -->
+    <div id="mobileSearchOverlay" class="mobile-search-overlay hidden" aria-hidden="true">
+        <div class="mobile-search-inner">
+            <button id="mobileSearchClose" class="mobile-search-close" aria-label="Bağla"><i class="fas fa-times"></i></button>
+            <input id="mobileSearchInput" type="search" placeholder="Məhsul axtarın..." autofocus />
         </div>
     </div>
 
